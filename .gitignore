@@ -1,0 +1,4 @@
+.DS_Store
+training/
+test_set_images/
+.ipynb_checkpoints/
