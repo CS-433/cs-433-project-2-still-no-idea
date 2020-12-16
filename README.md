@@ -1,32 +1,33 @@
 # Project Road Segmentation
 
-For this choice of project task, we provide a set of satellite images acquired 
-from GoogleMaps. We also provide ground-truth images where each pixel is labeled 
-as road or background. 
+This is the code and report for the Road Segmentation project of the CS-433 class.
 
-Your task is to train a classifier to segment roads in these images, i.e. 
-assigns a label `road=1, background=0` to each pixel.
+## Report
 
-Submission system environment setup:
+The report can be found in report.pdf
 
-1. The dataset is available from the 
-[CrowdAI page](https://www.crowdai.org/challenges/epfl-ml-road-segmentation).
+## Code organization
 
-2. Obtain the python notebook `segment_aerial_images.ipynb` from this github 
-folder, to see example code on how to extract the images as well as 
-corresponding labels of each pixel.
+The code is split into two main parts:
+* The UNet architecture is contained in the `Unet.ipynb` file
+* The CNN architecture is contained in the TODO
 
-The notebook shows how to use `scikit learn` to generate features from each 
-pixel, and finally train a linear classifier to predict whether each pixel is 
-road or background. Or you can use your own code as well. Our example code here 
-also provides helper functions to visualize the images, labels and predictions. 
-In particular, the two functions `mask_to_submission.py` and 
-`submission_to_mask.py` help you to convert from the submission format to a 
-visualization, and vice versa.
+Both file were run on Google colab and contains a variable `root_dir` which indicates the directory with the data and the pretrained model. This root directory must have the following structure :
+- `images/`
+    - all images for the training set
+- `groundtruth/`
+    - all groundtruth for the training set
+- `test_set_images/`  
+    - `test_i/` : for i from 1 to 50
+        - `test_i.png`
+- `results/` : the folder to save the prediction
+- `convmodel100.pth` : pretrained CNN with 100 epochs
+- `modelUnet.pth` : pretrained UNet with 100 epochs
 
-3. As a more advanced approach, try `tf_aerial_images.py`, which demonstrates 
-the use of a basic convolutional neural network in TensorFlow for the same 
-prediction task.
+`mask_to_submission.py` transforms the submission found in a `results` directory into a `submission.csv` file
 
-Evaluation Metric:
- [F1 score](https://en.wikipedia.org/wiki/F1_score)
+## Results
+
+`results_cnn/` contains the predictions made by the CNN  
+`results_postproc/` contains the postprocessed predictions made by the CNN  
+`results_unet/` contains the predictions made by the UNet  
