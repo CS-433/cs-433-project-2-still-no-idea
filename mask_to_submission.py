@@ -38,11 +38,10 @@ def masks_to_submission(submission_filename, *image_filenames):
             f.writelines("{}\n".format(s) for s in mask_to_submission_strings(fn))
 
 
-if __name__ == "__main__":
-    submission_filename = "submission.csv"
+def create_submission(submission_filename, root_dir):
     image_filenames = []
     for i in range(1, 51):
-        image_filename = "results/test_" + str(i) + ".png"
+        image_filename = root_dir + "test_" + str(i) + ".png"
         print(image_filename)
         image_filenames.append(image_filename)
     masks_to_submission(submission_filename, *image_filenames)
