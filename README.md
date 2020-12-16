@@ -6,6 +6,14 @@ This is the code and report for the Road Segmentation project of the CS-433 clas
 
 The report can be found in report.pdf
 
+## Required libraries
+To run the notebooks in local you will need the following libraries :
+ -  pyTorch
+ -  scikit-image
+ -  opencv-python
+ 
+ Then you can either execute them in local or push them on google collab to do the same.
+ 
 ## Code organization
 
 The code is split into two main parts:
