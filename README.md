@@ -44,3 +44,13 @@ Both file were run on Google colab and contains a variable `root_dir` which indi
 `results_cnn/` contains the predictions made by the CNN  
 `results_postproc/` contains the postprocessed predictions made by the CNN  
 `results_unet/` contains the predictions made by the UNet  
+
+## AIcrowd
+
+The best submission is `Submission #109779`
+
+## Authors
+
+- Simon Wicky simon.wicky@epfl.ch
+- Gaultier Lonfat gaultier.lonfat@epfl.ch
+- Joachim Dunant joachim.dunant@epfl.ch
