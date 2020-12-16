@@ -41,7 +41,7 @@ def masks_to_submission(submission_filename, *image_filenames):
 def create_submission(submission_filename, root_dir):
     image_filenames = []
     for i in range(1, 51):
-        image_filename = root_dir + "test_" + str(i) + ".png"
+        image_filename = root_dir + "result_" + str(i) + ".png"
         print(image_filename)
         image_filenames.append(image_filename)
     masks_to_submission(submission_filename, *image_filenames)
