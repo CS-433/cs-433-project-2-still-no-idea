@@ -12,13 +12,13 @@ To run the notebooks in local you will need the following libraries :
  -  scikit-image
  -  opencv-python
  
- Then you can either execute them in local or push them on google collab to do the same.
+ Then you can execute `run.py` in local, which will give a file `final_submission.csv`.
  
 ## Code organization
 
 The code is split into two main parts:
 * The UNet architecture is contained in the `Unet.ipynb` file
-* The CNN architecture is contained in the `Road_segmentation.ipynb` file
+* The CNN architecture is contained in the `Road_segmentation.ipynb` or `run.py` file
 
 Both file were run on Google colab and contains a variable `root_dir` which indicates the directory with the data and the pretrained model. This root directory must have the following structure :
 - `images/`
