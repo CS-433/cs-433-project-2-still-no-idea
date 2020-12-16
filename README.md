@@ -18,7 +18,7 @@ To run the notebooks in local you will need the following libraries :
 
 The code is split into two main parts:
 * The UNet architecture is contained in the `Unet.ipynb` file
-* The CNN architecture is contained in the TODO
+* The CNN architecture is contained in the `Road_segmentation.ipynb` file
 
 Both file were run on Google colab and contains a variable `root_dir` which indicates the directory with the data and the pretrained model. This root directory must have the following structure :
 - `images/`
