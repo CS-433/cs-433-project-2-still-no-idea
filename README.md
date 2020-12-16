@@ -4,7 +4,7 @@ This is the code and report for the Road Segmentation project of the CS-433 clas
 
 ## Report
 
-The report can be found in report.pdf
+The report can be found in Report.pdf
 
 ## Required libraries
 To run the notebooks in local you will need the following libraries :
