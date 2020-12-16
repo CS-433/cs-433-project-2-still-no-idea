@@ -26,6 +26,11 @@ Both file were run on Google colab and contains a variable `root_dir` which indi
 
 `mask_to_submission.py` transforms the submission found in a `results` directory into a `submission.csv` file
 
+## Pretrained models
+`convmodel100.pth` contains the pretrained CNN with 100 epochs
+`modelUnet.txt` contains a link to get the pretrained UNet with 100 epochs. The file is too big for GitHub
+
+
 ## Results
 
 `results_cnn/` contains the predictions made by the CNN  
