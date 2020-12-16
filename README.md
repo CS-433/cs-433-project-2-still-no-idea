@@ -12,7 +12,7 @@ To run the notebooks in local you will need the following libraries :
  -  scikit-image
  -  opencv-python
  
- In `run.py` you can update the line `root_dir = ""` with the path to this directory if needed.
+ In `run.py` you can update the line 32 `root_dir = ""` with the path to this directory if needed.
  Then you can execute `run.py` in local, which will give a file `final_submission.csv`.
  
 ## Code organization
