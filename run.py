@@ -17,11 +17,6 @@ import cv2
 from skimage import morphology
 import mask_to_submission.py
 
-# Uncomment the next lines to mount a drive on google colab
-#from google.colab import drive
-#drive.mount('/content/drive')
-#sys.path.insert(0,'/content/drive/MyDrive/road_seg')
-
 """# CNN with preprocessing and postprocessing
 
 ## Global variables
