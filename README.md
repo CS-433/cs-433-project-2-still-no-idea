@@ -8,7 +8,8 @@ The report can be found in Report.pdf
 
 ## Required libraries
 To run the notebooks in local you will need the following libraries :
- -  pyTorch
+ -  matplotlib
+ -  pyTorch v1.5.1 and torchvision v0.6.1 using `conda install pytorch==1.5.1 torchvision==0.6.1 cudatoolkit=10.2 -c pytorch`
  -  scikit-image
  -  opencv-python
  
