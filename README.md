@@ -13,8 +13,6 @@ To run the notebooks in local you will need the following libraries :
  -  scikit-image
  -  opencv-python
  
- Add the folders `images`, `groundtruth` and `test_set_images` to the directory
- 
  In `run.py` you can update the line 26 `root_dir = ""` with the path to this directory if needed.
  Then you can execute `run.py` in local, which will give a file `final_submission.csv`.
  
@@ -37,6 +35,8 @@ Both file were run on Google colab and contains a variable `root_dir` which indi
 - `modelUnet.pth` : pretrained UNet with 100 epochs
 
 `mask_to_submission.py` transforms the submission found in a `results` directory into a `submission.csv` file
+
+Alternatively, you can run `run.py` with the complete repo. The structure for the CNN is already there.
 
 ## Pretrained models
 `convmodel100.pth` contains the pretrained CNN with 100 epochs
