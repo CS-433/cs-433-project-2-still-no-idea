@@ -111,11 +111,20 @@ class RSDataset(Dataset):
 
         if prepro:
             if gaussian:
-                img = cv2.GaussianBlur(mpimg.imread(self.image_dir + self.imgs[index]).astype(np.float32), (5, 5),
-                                       cv2.BORDER_DEFAULT)
+                img = cv2.GaussianBlur(
+                    mpimg.imread(self.image_dir + self.imgs[index]).astype(np.float32),
+                    (5, 5),
+                    cv2.BORDER_DEFAULT,
+                )
             else:
-                img = cv2.bilateralFilter(removeUselessPixels(mpimg.imread(self.image_dir + self.imgs[index])), 8, 10,
-                                          16)
+                img = cv2.bilateralFilter(
+                    removeUselessPixels(
+                        mpimg.imread(self.image_dir + self.imgs[index])
+                    ),
+                    8,
+                    10,
+                    16,
+                )
         else:
             img = mpimg.imread(self.image_dir + self.imgs[index])
         img_full = torch.tensor(img).permute(2, 0, 1)
@@ -134,10 +143,10 @@ class RSDataset(Dataset):
         gt_img = gt_img.to(device)
 
         return {
-            'image': img,
-            'target': gt_img,
-            'image_full': img_full,
-            'target_full': gt_full
+            "image": img,
+            "target": gt_img,
+            "image_full": img_full,
+            "target_full": gt_full,
         }
 
 
@@ -165,10 +174,18 @@ class RSTestDataset(Dataset):
         # Image processing
         if prepro:
             if gaussian:
-                img = cv2.GaussianBlur(mpimg.imread(self.image_dir + filename).astype(np.float32), (5, 5),
-                                       cv2.BORDER_DEFAULT)
+                img = cv2.GaussianBlur(
+                    mpimg.imread(self.image_dir + filename).astype(np.float32),
+                    (5, 5),
+                    cv2.BORDER_DEFAULT,
+                )
             else:
-                img = cv2.bilateralFilter(removeUselessPixels(mpimg.imread(self.image_dir + filename)), 8, 10, 16)
+                img = cv2.bilateralFilter(
+                    removeUselessPixels(mpimg.imread(self.image_dir + filename)),
+                    8,
+                    10,
+                    16,
+                )
         else:
             img = mpimg.imread(self.image_dir + filename)
         img_full = torch.tensor(img).permute(2, 0, 1)
@@ -178,9 +195,9 @@ class RSTestDataset(Dataset):
         img = img.to(device)
 
         return {
-            'image': img,
-            'image_full': img_full,
-            'filename': "test_{0}.png".format(index + 1)
+            "image": img,
+            "image_full": img_full,
+            "filename": "test_{0}.png".format(index + 1),
         }
 
 
@@ -232,9 +249,9 @@ def img_crop(im, w, h):
     for i in range(0, imgheight, h):
         for j in range(0, imgwidth, w):
             if is_2d:
-                im_patch = im[j:j + w, i:i + h]
+                im_patch = im[j : j + w, i : i + h]
             else:
-                im_patch = im[j:j + w, i:i + h, :]
+                im_patch = im[j : j + w, i : i + h, :]
             list_patches.append(im_patch)
     return list_patches
 
@@ -359,8 +376,12 @@ def postProcessing(prediction):
 
     shape = (int(size / patch_size), int(size / patch_size))
     result = np.zeros(shape)
-    result = np.asarray([l or reclosed_vert.reshape(shape[0] * shape[1]).astype(int)[i] for i, l in
-                         enumerate(reclosed_hor.reshape(shape[0] * shape[1]).astype(int))]).reshape(shape)
+    result = np.asarray(
+        [
+            l or reclosed_vert.reshape(shape[0] * shape[1]).astype(int)[i]
+            for i, l in enumerate(reclosed_hor.reshape(shape[0] * shape[1]).astype(int))
+        ]
+    ).reshape(shape)
 
     return pixelsToImagePatch(result, patch_size)
 
@@ -381,36 +402,55 @@ def computePrediction(model, dataset, imageSize, threshold=0.3, postprocessing=T
         prediction = torch.sigmoid(prediction).squeeze(1).to(torch.device("cpu"))
         prediction[prediction > threshold] = 1
         prediction[prediction < threshold] = 0
-        prediction = F.interpolate(prediction.view(1, 1, nb_patchs, nb_patchs).float(), size=(size, size)).squeeze(
-            0).squeeze(0).T
+        prediction = (
+            F.interpolate(
+                prediction.view(1, 1, nb_patchs, nb_patchs).float(), size=(size, size)
+            )
+            .squeeze(0)
+            .squeeze(0)
+            .T
+        )
         prediction = prediction.detach().numpy()
 
         if postprocessing:
             prediction = postProcessing(prediction)
 
         if dataset == datasetTest:
-            input = sample["image_full"].to(torch.device("cpu")).permute(1, 2, 0).numpy()
+            input = (
+                sample["image_full"].to(torch.device("cpu")).permute(1, 2, 0).numpy()
+            )
             cimg = concatenate_images(input, prediction)
 
             if not os.path.exists(root_dir + "results_postproc/"):
                 os.makedirs(root_dir + "results_postproc/")
-            mpimg.imsave(root_dir + "results_postproc/" + "result_" + sample['filename'][5:], prediction,
-                         cmap='Greys_r')
+            mpimg.imsave(
+                root_dir + "results_postproc/" + "result_" + sample["filename"][5:],
+                prediction,
+                cmap="Greys_r",
+            )
 
         elif dataset == datasetTrain:
-            input = sample["image_full"].to(torch.device("cpu")).permute(1, 2, 0).numpy()
+            input = (
+                sample["image_full"].to(torch.device("cpu")).permute(1, 2, 0).numpy()
+            )
             target = sample["target_full"].to(torch.device("cpu")).numpy()
             cimg = concatenate_images(input, prediction)
             cimg = concatenate_images(cimg, target)
 
             if not os.path.exists(root_dir + "results_train/"):
                 os.makedirs(root_dir + "results_train/")
-            mpimg.imsave(root_dir + "results_train/" + "resultTrain_" + '%.3d' % i + '.png', cimg, cmap='Greys_r')
+            mpimg.imsave(
+                root_dir + "results_train/" + "resultTrain_" + "%.3d" % i + ".png",
+                cimg,
+                cmap="Greys_r",
+            )
 
-        print("\rPrediction " + str(i + 1) + " / " + str(len(dataset)), end='', flush=True)
+        print(
+            "\rPrediction " + str(i + 1) + " / " + str(len(dataset)), end="", flush=True
+        )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
 
     model = ConvNet().to(device)
     optimizer = optim.Adam(model.parameters(), lr, weight_decay=1e-8)
@@ -420,9 +460,12 @@ if __name__ == '__main__':
         trainModel(model, criterion, optimizer, nb_epoch, train_loader, val_loader)
         torch.save(model.state_dict, root_dir + model_name)
     else:
-        model.load_state_dict(torch.load(root_dir + model_name)())
+        model.load_state_dict(torch.load(root_dir + model_name, map_location=device)())
 
     # computePrediction(model, datasetTrain, train_size**2)
     computePrediction(model, datasetTest, test_size ** 2)
 
-    mask_to_submission.create_submission("final_submission.csv", root_dir + "results_postproc/")
+    mask_to_submission.create_submission(
+        "final_submission.csv", root_dir + "results_postproc/"
+    )
+
